@@ -1,0 +1,49 @@
+version: '3.7'
+services:
+  api:
+    build:
+      context: .
+      target: development
+    image: producao-api
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - db-producao
+    entrypoint: /usr/src/app/entrypoint.sh
+    volumes:
+      - .:/usr/src/app/
+      - /usr/src/app/node_modules
+    networks:
+      - producao-network
+  db-producao:
+    image: postgres
+    container_name: db-producao
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_produ:/var/lib/postgresql/data/
+    networks:
+      - producao-network
+  db-producao-test:
+    image: postgres
+    container_name: db-producao-test
+    env_file:
+      - .env.test
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data_produ_test:/var/lib/postgresql/data/
+    networks:
+      - producao-network
+volumes:
+  postgres_data_produ:
+  postgres_data_produ_test:
+networks:
+  producao-network:
+    name: producao-network

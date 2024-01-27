@@ -1,0 +1,32 @@
+name: Deploy CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: install dependencies
+      run: npm ci
+  
+    - name: Login to DockerHub
+      run: docker login -u rickwalking -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      run: |
+        docker build . -t rickwalking/lanchonete-producao:latest
+        docker push rickwalking/lanchonete-producao:latest
