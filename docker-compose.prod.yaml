@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  api:
+    image: rickwalking/lanchonete-producao:latest
+    ports:
+      - "80:3000"
+    env_file:
+      - .env
+    depends_on:
+      - db-lanchonete-producao-prod
+    networks:
+      - lanchonete-producao-prod-network
+  db-lanchonete-producao-prod:
+    image: postgres
+    container_name: db-lanchonete-producao-prod
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_producao_prod:/var/lib/postgresql/data/
+    networks:
+      - lanchonete-producao-prod-network
+volumes:
+  postgres_producao_prod:
+networks:
+  lanchonete-producao-prod-network:
+    name: lanchonete-producao-prod-network

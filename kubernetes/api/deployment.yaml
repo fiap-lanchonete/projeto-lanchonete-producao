@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lanchonete-producao
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lanchonete-producao
+  template:
+    metadata:
+      labels:
+        app: lanchonete-producao
+    spec:
+      containers:
+        - name: projeto-lanchonete-producao
+          image: rickwalking/lanchonete-producao:latest
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: api-secret
+                  key: database_url
