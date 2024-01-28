@@ -9,3 +9,6 @@ stop_dev:
 
 stop_test:
 	docker compose stop db-producao-test
+
+bash_dev:
+	docker exec -it projeto-lanchonete-producao-api-1 sh
