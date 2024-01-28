@@ -27,7 +27,7 @@ describe('GetOrderQueueUseCase', () => {
       ];
 
       jest
-        .spyOn(mockOrderService, 'findByStatus')
+        .spyOn(mockOrderService, 'findManyToQueue')
         .mockResolvedValue(mockedQueue);
 
       const result = await getOrderQueueUseCase.execute();

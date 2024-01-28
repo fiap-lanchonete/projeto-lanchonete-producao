@@ -6,6 +6,6 @@ export class GetQueueOrderUseCase {
   constructor(private readonly orderService: OrderService) {}
 
   async execute() {
-    return await this.orderService.findByStatus('IN_PREPARATION');
+    return await this.orderService.findManyToQueue();
   }
 }

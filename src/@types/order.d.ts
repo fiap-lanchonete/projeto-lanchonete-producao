@@ -5,8 +5,8 @@ namespace Order {
     order_id: number;
     status: Steps;
     user_id: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
   }
 
   type Steps = 'IN_PREPARATION' | 'READY' | 'FINISHED';
