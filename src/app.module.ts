@@ -5,6 +5,7 @@ import { PrismaHelper } from 'src/adapters/database/helpers/prisma.helper';
 import { OrderRepository } from 'src/adapters/database/repositories/order.repository';
 import { OrderService } from 'src/application/services/order.service';
 import { GetQueueOrderUseCase } from 'src/application/usecases/get-queue.usecase';
+import { MarkOrderAsInPreparationUseCase } from 'src/application/usecases/mark-order-as-in-preparation.usecase';
 
 @Module({
   imports: [],
@@ -12,6 +13,7 @@ import { GetQueueOrderUseCase } from 'src/application/usecases/get-queue.usecase
   providers: [
     OrderService,
     GetQueueOrderUseCase,
+    MarkOrderAsInPreparationUseCase,
     {
       provide: 'OrderRepository',
       useClass: OrderRepository,
