@@ -12,9 +12,6 @@ export class MarkOrderAsFinishedUseCase {
       throw new ConflictException('Unable to change order state');
     }
 
-    return await this.orderService.create({
-      ...orderFound,
-      status: 'FINISHED',
-    });
+    return await this.orderService.updateStatus(id, 'FINISHED');
   }
 }
