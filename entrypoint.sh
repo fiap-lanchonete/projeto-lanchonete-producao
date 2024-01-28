@@ -13,4 +13,4 @@ else
   # npx prisma db seed
 fi
 
-su node -c "npm run start:dev"
+npm run start:dev
