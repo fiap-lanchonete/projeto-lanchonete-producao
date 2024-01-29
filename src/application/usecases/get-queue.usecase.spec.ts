@@ -20,7 +20,7 @@ describe('GetOrderQueueUseCase', () => {
           id: 1,
           order_id: 2,
           status: 'IN_PREPARATION',
-          user_id: 23,
+          cpf: 23,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

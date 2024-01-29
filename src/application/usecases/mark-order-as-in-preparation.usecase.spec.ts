@@ -26,7 +26,7 @@ describe('MarkOrderAsInPreparationUseCase', () => {
         id: 23,
         order_id: 1,
         status: 'IN_PREPARATION',
-        user_id: 22,
+        cpf: 22,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -38,7 +38,7 @@ describe('MarkOrderAsInPreparationUseCase', () => {
         id: 23,
         order_id: 1,
         status: 'IN_PREPARATION',
-        user_id: 22,
+        cpf: 22,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -51,7 +51,7 @@ describe('MarkOrderAsInPreparationUseCase', () => {
         id: 23,
         order_id: 1,
         status: 'IN_PREPARATION',
-        user_id: 22,
+        cpf: 22,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -63,7 +63,7 @@ describe('MarkOrderAsInPreparationUseCase', () => {
         id: 23,
         order_id: 1,
         status: 'IN_PREPARATION',
-        user_id: 22,
+        cpf: 22,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
