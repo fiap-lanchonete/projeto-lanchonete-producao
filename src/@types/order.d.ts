@@ -4,7 +4,7 @@ namespace Order {
     id: number;
     order_id: number;
     status: Steps;
-    user_id: number;
+    cpf: number;
     createdAt?: Date;
     updatedAt?: Date;
   }

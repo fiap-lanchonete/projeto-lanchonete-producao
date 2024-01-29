@@ -20,7 +20,7 @@ describe('OrderService', () => {
           id: 1,
           order_id: 2,
           status: 'IN_PREPARATION',
-          user_id: 23,
+          cpf: 23,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -40,7 +40,7 @@ describe('OrderService', () => {
         id: 1,
         order_id: 2,
         status: 'IN_PREPARATION',
-        user_id: 11,
+        cpf: 11,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -60,7 +60,7 @@ describe('OrderService', () => {
         id: 1,
         order_id: 2,
         status: 'IN_PREPARATION',
-        user_id: 22,
+        cpf: 22,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -70,7 +70,7 @@ describe('OrderService', () => {
         order_id: 2,
         status: 'IN_PREPARATION',
         id: 22,
-        user_id: 24,
+        cpf: 24,
       });
       expect(result).toBeDefined();
       expect(result).toEqual(mockedOrder);
@@ -83,7 +83,7 @@ describe('OrderService', () => {
         id: 1,
         order_id: 2,
         status: 'IN_PREPARATION',
-        user_id: 23,
+        cpf: 23,
         createdAt: new Date(),
         updatedAt: new Date(),
       };

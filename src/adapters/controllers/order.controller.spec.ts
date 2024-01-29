@@ -42,7 +42,7 @@ describe('OrderController', () => {
           id: 1,
           order_id: 2,
           status: 'IN_PREPARATION',
-          user_id: 22,
+          cpf: 22,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -60,7 +60,7 @@ describe('OrderController', () => {
         id: 1,
         order_id: 2,
         status: 'IN_PREPARATION',
-        user_id: 23,
+        cpf: 23,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -81,7 +81,7 @@ describe('OrderController', () => {
         id: 1,
         order_id: 2,
         status: 'READY',
-        user_id: 10,
+        cpf: 10,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -100,7 +100,7 @@ describe('OrderController', () => {
         id: 1,
         order_id: 2,
         status: 'FINISHED',
-        user_id: 5,
+        cpf: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
