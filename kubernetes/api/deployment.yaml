@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: lanchonete-producao
+  namespace: microservices
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: lanchonete-producao
@@ -12,6 +13,7 @@ spec:
       labels:
         app: lanchonete-producao
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: projeto-lanchonete-producao
           image: rickwalking/lanchonete-producao:latest
@@ -23,11 +25,27 @@ spec:
               memory: 256Mi
               cpu: "0.2"
           ports:
-            - containerPort: 3000
+            - containerPort: 3010
           imagePullPolicy: IfNotPresent
           env:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: api-secret
+                  name: producao-env
                   key: database_url
+            - name: RMQ_URL
+              valueFrom:
+                secretKeyRef:
+                  name: producao-env
+                  key: rmq_url
+            - name: RMQ_QUEUE
+              valueFrom:
+                secretKeyRef:
+                  name: producao-env
+                  key: rmq_queue
+            - name: RMQ_QUEUE_DURABLE
+              valueFrom:
+                secretKeyRef:
+                  name: producao-env
+                  key: rmq_queue_durable
+

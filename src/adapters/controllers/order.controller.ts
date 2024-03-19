@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Controller, Get, Param, Put } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { InPreparationDTO } from 'src/application/dtos/mark-in-preparation.dto';
 import { GetQueueOrderUseCase } from 'src/application/usecases/get-queue.usecase';
 import { MarkOrderAsFinishedUseCase } from 'src/application/usecases/mark-order-as-finished.usecase';
 import { MarkOrderAsInPreparationUseCase } from 'src/application/usecases/mark-order-as-in-preparation.usecase';
@@ -21,12 +23,17 @@ export class OrderController {
     return await this.getQueueOrderUseCase.execute();
   }
 
-  @Post('in_preparation')
+  @MessagePattern('in_preparation')
   @ApiOperation({
     summary: 'Receive the order and mark it as in preparation state',
   })
-  async markAsInPreparation(@Body() data) {
-    return await this.markOrderAsInPreparationUseCase.execute(data);
+  async markAsInPreparation(@Payload() data: InPreparationDTO) {
+    const status = 'IN_PREPARATION';
+
+    return await this.markOrderAsInPreparationUseCase.execute({
+      ...data,
+      status,
+    });
   }
 
   @Put('ready')

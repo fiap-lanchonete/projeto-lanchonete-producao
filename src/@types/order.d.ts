@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Order {
   interface Data {
-    id: number;
-    order_id: number;
+    id?: number;
+    idempotent_key: string;
+    payment_id: string;
     status: Steps;
-    cpf: number;
     createdAt?: Date;
     updatedAt?: Date;
   }

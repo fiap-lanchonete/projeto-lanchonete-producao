@@ -6,7 +6,7 @@ CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
     "order_id" INTEGER NOT NULL,
     "status" "OrderSteps",
-    "user_id" INTEGER,
+    "cpf" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
