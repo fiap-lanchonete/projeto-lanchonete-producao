@@ -6,7 +6,7 @@ services:
       target: development
     image: producao-api
     ports:
-      - "3000:3000"
+      - "3010:3000"
     env_file:
       - .env
     depends_on:
@@ -24,9 +24,9 @@ services:
       - .env
     restart: always
     ports:
-      - "5432:5432"
+      - "5435:5432"
     volumes:
-      - postgres_data_produ:/var/lib/postgresql/data/
+      - postgres_producao:/var/lib/postgresql/data/
     networks:
       - producao-network
   db-producao-test:
@@ -36,14 +36,14 @@ services:
       - .env.test
     restart: always
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
-      - postgres_data_produ_test:/var/lib/postgresql/data/
+      - postgres_producao_test:/var/lib/postgresql/data/
     networks:
       - producao-network
 volumes:
-  postgres_data_produ:
-  postgres_data_produ_test:
+  postgres_producao:
+  postgres_producao_test:
 networks:
   producao-network:
     name: producao-network

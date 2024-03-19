@@ -24,9 +24,9 @@ describe('MarkOrderAsFinishedUseCase', () => {
     it('should not mark order as finished if status of order is not ready', async () => {
       const mockOrder: PrismaOrder = {
         id: 23,
-        order_id: 1,
+        idempotent_key: '1',
         status: 'IN_PREPARATION',
-        cpf: 22,
+        payment_id: '1',
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -42,9 +42,9 @@ describe('MarkOrderAsFinishedUseCase', () => {
     it('should mark order as finished', async () => {
       const mockOrder: PrismaOrder = {
         id: 23,
-        order_id: 1,
+        idempotent_key: '1',
         status: 'READY',
-        cpf: 22,
+        payment_id: '1',
         createdAt: new Date(),
         updatedAt: new Date(),
       };

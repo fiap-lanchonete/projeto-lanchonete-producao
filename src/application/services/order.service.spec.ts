@@ -6,25 +6,26 @@ import { OrderService } from 'src/application/services/order.service';
 describe('OrderService', () => {
   let orderService: OrderService;
   let mockOrderRepository: OrderRepository;
+  let order;
 
   beforeEach(() => {
     const mockPrismaHelper = {} as PrismaHelper;
     mockOrderRepository = new OrderRepository(mockPrismaHelper);
     orderService = new OrderService(mockOrderRepository);
+
+    order = {
+      id: 1,
+      idempotent_key: '123',
+      status: 'IN_PREPARATION',
+      payment_id: '123',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
   });
 
   describe('findManyToQueue', () => {
     it('should return an array of orders', async () => {
-      const mockedOrders: Order[] = [
-        {
-          id: 1,
-          order_id: 2,
-          status: 'IN_PREPARATION',
-          cpf: 23,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ];
+      const mockedOrders: Order[] = [order];
 
       jest
         .spyOn(mockOrderRepository, 'findManyToQueue')
@@ -36,64 +37,35 @@ describe('OrderService', () => {
 
   describe('findById', () => {
     it('should return an order', async () => {
-      const mockedOrder: Order = {
-        id: 1,
-        order_id: 2,
-        status: 'IN_PREPARATION',
-        cpf: 11,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+      jest.spyOn(mockOrderRepository, 'findById').mockResolvedValue(order);
 
-      jest
-        .spyOn(mockOrderRepository, 'findById')
-        .mockResolvedValue(mockedOrder);
       const result = await orderService.findById(1);
       expect(result).toBeDefined();
-      expect(result).toEqual(mockedOrder);
+      expect(result).toEqual(order);
     });
   });
 
   describe('create', () => {
     it('should create an order', async () => {
-      const mockedOrder: Order = {
-        id: 1,
-        order_id: 2,
-        status: 'IN_PREPARATION',
-        cpf: 22,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
-      jest.spyOn(mockOrderRepository, 'create').mockResolvedValue(mockedOrder);
+      jest.spyOn(mockOrderRepository, 'create').mockResolvedValue(order);
       const result = await orderService.create({
-        order_id: 2,
+        idempotent_key: '123',
         status: 'IN_PREPARATION',
-        id: 22,
-        cpf: 24,
+        payment_id: '123',
       });
       expect(result).toBeDefined();
-      expect(result).toEqual(mockedOrder);
+      expect(result).toEqual(order);
     });
   });
 
   describe('updateStatus', () => {
     it('should update an order status', async () => {
-      const mockedOrder: Order = {
-        id: 1,
-        order_id: 2,
-        status: 'IN_PREPARATION',
-        cpf: 23,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+      jest.spyOn(mockOrderRepository, 'updateStatus').mockResolvedValue(order);
 
-      jest
-        .spyOn(mockOrderRepository, 'updateStatus')
-        .mockResolvedValue(mockedOrder);
       const result = await orderService.updateStatus(1, 'IN_PREPARATION');
+
       expect(result).toBeDefined();
-      expect(result).toEqual(mockedOrder);
+      expect(result).toEqual(order);
     });
   });
 });

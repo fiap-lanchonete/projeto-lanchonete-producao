@@ -12,3 +12,6 @@ stop_test:
 
 bash_dev:
 	docker exec -it projeto-lanchonete-producao-api-1 sh
+
+logs_dev:
+	docker logs projeto-lanchonete-producao-api-1 --follow

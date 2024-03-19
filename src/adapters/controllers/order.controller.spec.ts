@@ -1,4 +1,3 @@
-import { Order } from '@prisma/client';
 import { OrderController } from 'src/adapters/controllers/order.controller';
 import { OrderRepository } from 'src/adapters/database/repositories/order.repository';
 import { OrderService } from 'src/application/services/order.service';
@@ -14,6 +13,7 @@ describe('OrderController', () => {
   let markOrderAsFinishedUseCase: MarkOrderAsFinishedUseCase;
   let markOrderAsReadyUseCase: MarkOrderAsReadyUseCase;
   let mockOrderService: OrderService;
+  let order;
 
   beforeEach(() => {
     const mockOrderRepository = {} as OrderRepository;
@@ -33,20 +33,20 @@ describe('OrderController', () => {
       markOrderAsReadyUseCase,
       markOrderAsFinishedUseCase,
     );
+
+    order = {
+      id: 1,
+      idempotent_key: '123',
+      status: 'IN_PREPARATION',
+      payment_id: '123',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
   });
 
   describe('queueOfOrders', () => {
     it('should return a queue of orders', async () => {
-      const mockedQueue: Order.Data[] = [
-        {
-          id: 1,
-          order_id: 2,
-          status: 'IN_PREPARATION',
-          cpf: 22,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ];
+      const mockedQueue: Order.Data[] = [order];
 
       jest.spyOn(getQueueUseCase, 'execute').mockResolvedValue(mockedQueue);
       const result = await orderController.queueOfOrders();
@@ -56,39 +56,17 @@ describe('OrderController', () => {
 
   describe('markAsInPreparation', () => {
     it('should mark the order as in preparation', async () => {
-      const mockedOrder: Order.Data = {
-        id: 1,
-        order_id: 2,
-        status: 'IN_PREPARATION',
-        cpf: 23,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
       jest
         .spyOn(markOrderAsInPreparationUseCase, 'execute')
-        .mockResolvedValue(mockedOrder);
-      const result = await orderController.markAsInPreparation({
-        order_id: 2,
-      });
+        .mockResolvedValue(order);
+      const result = await orderController.markAsInPreparation(order);
       expect(result).toBeDefined();
     });
   });
 
   describe('markAsReady', () => {
     it('should mark the order as ready', async () => {
-      const mockedOrder: Order = {
-        id: 1,
-        order_id: 2,
-        status: 'READY',
-        cpf: 10,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
-      jest
-        .spyOn(markOrderAsReadyUseCase, 'execute')
-        .mockResolvedValue(mockedOrder);
+      jest.spyOn(markOrderAsReadyUseCase, 'execute').mockResolvedValue(order);
       const result = await orderController.markAsReady('1');
       expect(result).toBeDefined();
     });
@@ -96,18 +74,9 @@ describe('OrderController', () => {
 
   describe('markAsFinished', () => {
     it('should mark the order as finished', async () => {
-      const mockedOrder: Order = {
-        id: 1,
-        order_id: 2,
-        status: 'FINISHED',
-        cpf: 5,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
       jest
         .spyOn(markOrderAsFinishedUseCase, 'execute')
-        .mockResolvedValue(mockedOrder);
+        .mockResolvedValue(order);
       const result = await orderController.markAsFinished('1');
       expect(result).toBeDefined();
     });
